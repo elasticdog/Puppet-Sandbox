@@ -29,6 +29,7 @@ To use Puppet Sandbox, you must have the following items installed and working:
 
 * [VirtualBox](https://www.virtualbox.org/)
 * [Vagrant](http://vagrantup.com/)
+* [Vagrant vmhosts plugin](https://github.com/cegeka/vagrant-vmhosts.git)
 
 Puppet Sandbox has been designed for and tested with Vagrant base boxes running:
 
@@ -36,6 +37,20 @@ Puppet Sandbox has been designed for and tested with Vagrant base boxes running:
 * Ubuntu 10.04 - Lucid Lynx
 
 ...although it may work just fine with other distributions/versions.
+
+
+Vagrant vmhost plugin Installation
+----------------------------------
+
+    $ vagrant gem install vagrant-vmhosts
+
+###Windows Notes on vagrant vmhosts plugin installation: 
+Wrong DevKit PATH Error?
+
+Execute: <code>C:\vagrant\vagrant\embedded\devkit\devkitvars.bat</code> # To set the devkit environment path
+
+More info: [issue#817](https://github.com/mitchellh/vagrant/issues/817)
+
 
 Usage
 =====
