@@ -29,6 +29,7 @@ To use Puppet Sandbox, you must have the following items installed and working:
 
 * [VirtualBox](https://www.virtualbox.org/)
 * [Vagrant](http://vagrantup.com/)
+* [Vagrant hostmaster plugin](https://github.com/mosaicxm/vagrant-hostmaster)
 
 Puppet Sandbox has been designed for and tested with Vagrant base boxes running:
 
@@ -36,6 +37,20 @@ Puppet Sandbox has been designed for and tested with Vagrant base boxes running:
 * Ubuntu 10.04 - Lucid Lynx
 
 ...although it may work just fine with other distributions/versions.
+
+
+Vagrant hostmaster plugin Installation
+----------------------------------
+
+    $ vagrant gem install vagrant-hostmaster
+
+###Windows Notes on vagrant hostmaster plugin installation: 
+Wrong DevKit PATH Error?
+
+Execute: <code>C:\vagrant\vagrant\embedded\devkit\devkitvars.bat</code> # To set the devkit environment path
+
+More info: [issue#817](https://github.com/mitchellh/vagrant/issues/817)
+
 
 Usage
 =====
@@ -110,6 +125,17 @@ If you don't want to wait for the standard 30-minutes between Puppet runs by
 the agent daemon, you can easily force a manual run:
 
     [vagrant@client1 ~]$ sudo puppet agent --test
+
+
+Add more nodes and update hosts on the fly
+------------------------------------------
+
+You can add more clients while the environment is running, just edit Vagrantfile, and add another host with their own IP.
+After that you have to refresh the hostsfile on the boxes already created.
+
+    $ vim Vagrantfile
+    $ vagrant up newclient
+    $ vagrant hosts update
 
 License
 =======
