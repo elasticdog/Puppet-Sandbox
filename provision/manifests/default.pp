@@ -12,4 +12,7 @@ class { 'networking': }
 
 if $hostname == 'puppet' {
   class { 'puppet::server': }
+  class { 'repository::server': }
+} else {
+  class { 'repository::client': stage => 'pre' }    
 }

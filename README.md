@@ -54,6 +54,8 @@ should be good to clone this repo and go:
 If you want a CentOS base box to work from, I highly recommend the boxes
 published by Jan Vansteenkiste: http://packages.vstone.eu/vagrant-boxes/
 
+The Vagrantfile is a symlink to either Vagrantfile.precise64 or Vagrantfile.centos63.
+
 Initial Startup
 ---------------
 
@@ -101,7 +103,7 @@ be picked up immediately.
 To have your module actually applied to one or more of the nodes, edit the
 `nodes.pp` file and include your classes...that's it!
 
-Check Your Handiwork
+Check Your Handywork
 --------------------
 
 To log on to the virtual machines and see the result of your applied Puppet
@@ -115,6 +117,11 @@ If you don't want to wait for the standard 30-minutes between Puppet runs by
 the agent daemon, you can easily force a manual run:
 
     [vagrant@client1 ~]$ sudo puppet agent --test
+
+Package Repositories
+--------------------
+
+A local YUM repo `sandbox` is configured on the puppet server.     Copy RPM files into `repository/yum` and then the next run of puppet will refresh the yum repository ...  if the puppet VM is already up you can run `vagrant provision puppet` to refresh it.
 
 License
 =======
