@@ -13,7 +13,7 @@ class repository::server {
 ##      class { 'repository::server::apt': }
 ##    }
     default: {
-      fail("Module '${module_name}' is not currently supported by Puppet Sandbox on ${::operatingsystem}")
+      #fail("Module '${module_name}' is not currently supported by Puppet Sandbox on ${::operatingsystem}")
     }
   }
 }

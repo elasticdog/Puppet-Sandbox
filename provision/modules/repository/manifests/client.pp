@@ -10,7 +10,7 @@ class repository::client {
 ##      class { 'repository::client-apt': }
 ##    }
     default: {
-      fail("Module '${module_name}' is not currently supported by Puppet Sandbox on ${::operatingsystem}")
+      #fail("Module '${module_name}' is not currently supported by Puppet Sandbox on ${::operatingsystem}")
     }
   }
 
