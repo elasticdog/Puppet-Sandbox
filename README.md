@@ -10,9 +10,10 @@ environment and tools.
 
 Puppet Sandbox will set up three separate virtual machines:
 
-* _puppet.example.com_ - the Puppet master server
+* _puppet.example.com_  - the Puppet master server
 * _client1.example.com_ - the first Puppet client machine
 * _client2.example.com_ - the second Puppet client machine
+* _fpm.example.com_     - package building machine
 
 These VMs can be used in conjunction to segregate and test your modules
 based on node roles, Puppet environments, etc. You can even test modules
@@ -53,6 +54,7 @@ should be good to clone this repo and go:
 
 If you want a CentOS base box to work from, I highly recommend the boxes
 published by Jan Vansteenkiste: http://packages.vstone.eu/vagrant-boxes/
+if using other CentOS boxes watch out for iptables being turned on by default.
 
 The Vagrantfile is a symlink to either Vagrantfile.precise64 or Vagrantfile.centos63.
 
@@ -103,7 +105,7 @@ be picked up immediately.
 To have your module actually applied to one or more of the nodes, edit the
 `nodes.pp` file and include your classes...that's it!
 
-Check Your Handywork
+Check Your Handiwork
 --------------------
 
 To log on to the virtual machines and see the result of your applied Puppet
@@ -118,10 +120,38 @@ the agent daemon, you can easily force a manual run:
 
     [vagrant@client1 ~]$ sudo puppet agent --test
 
+
 Package Repositories
 --------------------
 
-A local YUM repo `sandbox` is configured on the puppet server.     Copy RPM files into `repository/yum` and then the next run of puppet will refresh the yum repository ...  if the puppet VM is already up you can run `vagrant provision puppet` to refresh it.
+A local YUM repo `sandbox` is configured on the puppet server.     Copy RPM files into `/vagrant/packages/rpm` and then run `vagrant provision puppet` to refresh the repo.    Currently only supports RPM/YUM but will add APT support some time soon.
+
+Building Packages
+-----------------
+
+FPM is installed on the fpm host.   This is an excellent tool for building OS packages where writing specfiles gets painful.    FPM allows you to create RPM or APT packages from source,  or from a directory with all the apps installed.    Check the example redis or elasticsearch scripts on the FPM system under /tmp/ for examples of building packages using FPM.    Saving the resultant RPM to `/vagrant/packages/rpm` and run `vagrant provision puppet` will make it immediately available to client1,client2 for installation. 
+
+Example Package Building and Usage
+----------------------------------
+
+    $ vagrant up puppet fpm client1
+    $ vagrant ssh fpm
+    [vagrant@fpm ~]$ sudo /tmp/redis-rpm.sh
+    ...
+    ...
+    [vagrant@fpm ~]$ exit
+    $ vagrant provision puppet
+    $ vagrant ssh client1
+    [vagrant@client1 ~]$ sudo yum clean all
+    [vagrant@client1 ~]$ sudo yum -y install redis
+    [vagrant@client1 ~]$ sudo service redis-server start
+    [vagrant@client1 ~]$ redis-cli ping
+    PONG
+    [vagrant@client1 ~]$
+
+
+
+
 
 License
 =======

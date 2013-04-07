@@ -25,4 +25,25 @@ class fpm::centos {
     provider => 'gem',
     require  => [ Package["rubygems"], Package["ruby-devel"] ],
   }
+
+file { 'redis-rpm.sh':
+    ensure  => present,
+    path    => '/tmp/redis-rpm.sh',
+    owner   => vagrant,
+    group   => vagrant,
+    mode    => '0755',
+    replace => true,
+    source  => 'puppet:///modules/fpm/redis-rpm.sh',
+  }
+file { 'elasticsearch-rpm.sh':
+    ensure  => present,
+    path    => '/tmp/elasticsearch-rpm.sh',
+    owner   => vagrant,
+    group   => vagrant,
+    mode    => '0755',
+    replace => true,
+    source  => 'puppet:///modules/fpm/elasticsearch-rpm.sh',
+  }
+
+
 }

@@ -24,11 +24,11 @@ class repository::server-yum {
   }
 
 
-  file { '/vagrant/repository/yum':    
-    path    => '/vagrant/repository/yum',
+  file { '/vagrant/packages/rpm':    
+    path    => '/vagrant/packages/rpm',
     ensure  => directory,
-    owner   => root,
-    group   => root,
+    owner   => vagrant,
+    group   => vagrant,
     mode    => '0644',
     recurse => true,
     notify  => Exec['yum_createrepo'],
@@ -36,16 +36,16 @@ class repository::server-yum {
 
   file { 'index.html':
     ensure  => present,
-    path    => '/vagrant/repository/yum/index.html',
-    owner   => root,
-    group   => root,
+    path    => '/vagrant/packages/rpm/index.html',
+    owner   => vagrant,
+    group   => vagrant,
     mode    => '0644',
     replace => true,
     source  => 'puppet:///modules/repository/index.html',
   }
 
   exec { 'yum_createrepo':
-    command     => '/usr/bin/createrepo /vagrant/repository/yum',
+    command     => '/usr/bin/createrepo /vagrant/packages/rpm',
     refreshonly => true,
   }
 

@@ -1,5 +1,5 @@
 nodes.pp
 modules/*
 .vagrant
-repository/yum/*
-!repository/yum/README.md
+packages/rpm/*
+!packages/rpm/README.md
