@@ -1,1 +1,1 @@
-Vagrantfile.precise64
+Vagrantfile.centos63
