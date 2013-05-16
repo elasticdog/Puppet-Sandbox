@@ -7,7 +7,9 @@ stage { 'pre': before    => Stage['main'] }
 class { 'mirrors': stage => 'pre' }
 class { 'vagrant': stage => 'pre' }
 
-class { 'puppet': }
+class { 'puppet':
+  ensure => '2.7.21-1puppetlabs1',
+}
 class { 'networking': }
 
 if $hostname == 'puppet' {
