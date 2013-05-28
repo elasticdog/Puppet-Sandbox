@@ -13,5 +13,7 @@ class { 'puppet':
 class { 'networking': }
 
 if $hostname == 'puppet' {
-  class { 'puppet::server': }
+  class { 'puppet::server':
+    require => Class['puppet'],
+  }
 }
