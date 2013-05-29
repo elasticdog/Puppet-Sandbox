@@ -1,3 +1,2 @@
-* Support Arch Linux
-* Add an easy way to specify desired Puppet version
-* Make hosts file dynamic based on what is defined in Vagrantfile
+* Make it possible to have different versions of puppet.conf for master and client 
+* Bring README up-to-date
