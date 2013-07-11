@@ -22,12 +22,12 @@ Vagrant.configure("2") do |config|
       end
 
       memory = node[:ram] ? node[:ram] : 256;
-      node_config.vm.provider :virtualbox do |virtualbox|
-        virtualbox.customize [
+      node_config.vm.provider :virtualbox do |vb|
+        vb.customize [
           'modifyvm', :id,
           '--name', node[:hostname],
           '--memory', memory.to_s
-	]
+        ]
       end
 
       node_config.vm.provision :puppet do |puppet|
