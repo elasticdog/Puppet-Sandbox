@@ -1,3 +1,6 @@
+**This is for my own use only. No guarantees. Please use the original
+[puppet-sandbox](https://github.com/elasticdog/puppet-sandbox)**
+
 Description
 ===========
 
