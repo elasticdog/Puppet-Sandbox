@@ -34,22 +34,30 @@ class puppet(
     }
   }
 
-  package { 'puppet':
-    ensure => $ensure,
+  if $osfamily == 'windows' {
+    service { 'puppet':
+      enable => true,
+      ensure => running,
+    }
+  } else {
+    package { 'puppet':
+      ensure => $ensure,
+    }
+
+    service { 'puppet':
+      enable => true,
+      ensure => running,
+      require => Package[ 'puppet' ],
+    }
   }
 
-  # required to start client agent on ubuntu
-  exec { 'start_puppet':
-    command => '/bin/sed -i /etc/default/puppet -e "s/START=no/START=yes/"',
-    onlyif  => '/usr/bin/test -f /etc/default/puppet',
-    require => Package[ 'puppet' ],
-    before  => Service[ 'puppet' ],
+  if $::operatingsystem != 'windows' {
+    # required to start client agent on ubuntu
+    exec { 'start_puppet':
+      command => '/bin/sed -i /etc/default/puppet -e "s/START=no/START=yes/"',
+      onlyif  => '/usr/bin/test -f /etc/default/puppet',
+      require => Package[ 'puppet' ],
+      before  => Service[ 'puppet' ],
+    }
   }
-
-  service { 'puppet':
-    enable  => true,
-    ensure  => running,
-    require => Package[ 'puppet' ],
-  }
-
 }

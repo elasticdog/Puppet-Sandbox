@@ -17,11 +17,20 @@
 #
 class networking {
 
-  file { '/etc/hosts':
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
-    content => template('networking/hosts.erb'),
-  }
+  case $::operatingsystem {
+    'windows': {
+      file { 'c:/Windows/System32/drivers/etc/hosts':
+        content => template('networking/hosts-win.erb'),
+      }
+    }
 
+    default: {
+      file { '/etc/hosts':
+        owner   => 'root',
+        group   => 'root',
+        mode    => '0644',
+        content => template('networking/hosts.erb'),
+      }
+    }
+  }
 }
