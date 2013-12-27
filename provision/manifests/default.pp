@@ -13,3 +13,7 @@ class { 'networking': }
 if $hostname == 'puppet' {
   class { 'puppet::server': }
 }
+
+if $operatingsystem == 'windows' {
+  include certificates
+}
