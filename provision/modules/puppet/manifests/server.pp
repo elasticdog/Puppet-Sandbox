@@ -82,21 +82,28 @@ class puppet::server(
   }
 
   file { '/etc/puppet/manifests/nodes.pp':
-    ensure  => link,
+    ensure  => 'link',
     target  => '/vagrant/nodes.pp',
     require => Package[ 'puppetmaster' ],
   }
 
   # initialize a template file then ignore
   file { '/vagrant/nodes.pp':
-    ensure  => present,
+    ensure  => 'present',
     replace => false,
     source  => 'puppet:///modules/puppet/nodes.pp',
   }
 
   service { 'puppetmaster':
-    enable => true,
-    ensure => running,
+    ensure    => 'running',
+    enable    => true,
+    hasstatus => true,
   }
 
+  # The user puppet has to belong to the group vagrant. Otherwise puppet can't accesss /vagrant.
+  user { 'puppet':
+    ensure  => 'present',
+    groups  => 'vagrant',
+    require => Package['puppetmaster'];
+  }
 }
